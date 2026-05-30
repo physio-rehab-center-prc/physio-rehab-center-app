@@ -1,47 +1,40 @@
--- ==========================================
--- 1. KLASTER MASTER DATA & KEAMANAN
--- ==========================================
-
--- Tabel Pengguna (Otentikasi Login & Multi-Role)
+-- 1. Tabel PENGGUNA (Akses Otorisasi & RBAC)
 CREATE TABLE pengguna (
     id_pengguna INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    nama_lengkap VARCHAR(100) NOT NULL,
     role ENUM('Admin', 'Terapis', 'Farmasi', 'Kasir') NOT NULL,
     status_aktif BOOLEAN DEFAULT TRUE,
-    last_login DATETIME NULL
+    last_login DATETIME
 );
 
--- Tabel Pasien (Data Master Medis)
+-- 2. Tabel PASIEN (Data Master Pasien)
 CREATE TABLE pasien (
     id_pasien INT AUTO_INCREMENT PRIMARY KEY,
-    nik VARCHAR(16) UNIQUE NOT NULL,
+    nik VARCHAR(16) NOT NULL UNIQUE,
     nama_lengkap VARCHAR(100) NOT NULL,
     tanggal_lahir DATE NOT NULL,
-    jenis_kelamin ENUM('Laki-laki', 'Perempuan') NOT NULL,
+    jenis_kelamin ENUM('L', 'P') NOT NULL,
     alamat TEXT,
     no_telepon VARCHAR(15),
     email VARCHAR(100),
-    golongan_darah VARCHAR(3),
+    golongan_darah VARCHAR(2),
     alergi TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabel Terapis (Inheritance dari Pengguna secara Logis)
+-- 3. Tabel TERAPIS (Data Master Tenaga Kesehatan)
 CREATE TABLE terapis (
-    id_terapis INT PRIMARY KEY,
+    id_terapis INT AUTO_INCREMENT PRIMARY KEY,
     nama_lengkap VARCHAR(100) NOT NULL,
-    no_str VARCHAR(50) UNIQUE NOT NULL,
+    no_str VARCHAR(50) NOT NULL UNIQUE,
     spesialisasi VARCHAR(100),
     no_telepon VARCHAR(15),
     email VARCHAR(100),
-    status_aktif BOOLEAN DEFAULT TRUE,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_terapis) REFERENCES pengguna(id_pengguna) ON DELETE CASCADE
+    status_aktif BOOLEAN DEFAULT TRUE
 );
 
--- Tabel Item Medis (Inventaris Alat/Obat Farmasi)
+-- 4. Tabel ITEM MEDIS (Inventaris Farmasi/Alat)
 CREATE TABLE item_medis (
     id_item_medis INT AUTO_INCREMENT PRIMARY KEY,
     nama_item VARCHAR(100) NOT NULL,
@@ -52,7 +45,7 @@ CREATE TABLE item_medis (
     deskripsi TEXT
 );
 
--- Tabel Asuransi (Data Master Penjaminan)
+-- 5. Tabel ASURANSI (Data Penjamin Pasien)
 CREATE TABLE asuransi (
     id_asuransi INT AUTO_INCREMENT PRIMARY KEY,
     id_pasien INT,
@@ -60,113 +53,110 @@ CREATE TABLE asuransi (
     no_polis VARCHAR(50) NOT NULL,
     limit_tahunan DECIMAL(12,2) NOT NULL,
     sisa_limit DECIMAL(12,2) NOT NULL,
-    masa_berlaku DATE NOT NULL,
-    status ENUM('Aktif', 'Tidak Aktif') DEFAULT 'Aktif',
-    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien)
+    masa_berlaku DATE,
+    status VARCHAR(20) DEFAULT 'Aktif',
+    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien) ON DELETE CASCADE
 );
 
--- ==========================================
--- 2. KLASTER OPERASIONAL & KLINIS
--- ==========================================
+-- 6. Tabel PROGRAM TERAPI (Rencana Pemulihan)
+CREATE TABLE program_terapi (
+    id_program INT AUTO_INCREMENT PRIMARY KEY,
+    id_pasien INT,
+    nama_program VARCHAR(100) NOT NULL,
+    deskripsi TEXT,
+    tanggal_mulai DATE,
+    tanggal_selesai DATE,
+    status VARCHAR(20),
+    target_pemulihan TEXT,
+    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien) ON DELETE CASCADE
+);
 
--- Tabel Jadwal Terapi (Penjadwalan Kunjungan Sesi)
+-- 7. Tabel Junction: PROGRAM TERAPI TERAPIS (Relasi Banyak-ke-Banyak)
+CREATE TABLE program_terapi_terapis (
+    id_program INT,
+    id_terapis INT,
+    PRIMARY KEY (id_program, id_terapis),
+    FOREIGN KEY (id_program) REFERENCES program_terapi(id_program) ON DELETE CASCADE,
+    FOREIGN KEY (id_terapis) REFERENCES terapis(id_terapis) ON DELETE CASCADE
+);
+
+-- 8. Tabel JADWAL TERAPI (Transaksi Kunjungan Sesi)
 CREATE TABLE jadwal_terapi (
     id_jadwal INT AUTO_INCREMENT PRIMARY KEY,
     id_pasien INT NOT NULL,
     id_terapis INT NOT NULL,
+    id_program INT,
     tanggal_waktu DATETIME NOT NULL,
-    status ENUM('Dijadwalkan', 'Berlangsung', 'Selesai', 'Batal') DEFAULT 'Dijadwalkan',
+    status ENUM('Dijadwalkan', 'Selesai', 'Dibatalkan') DEFAULT 'Dijadwalkan',
     tipe_sesi VARCHAR(50),
-    durasi_menit INT NOT NULL DEFAULT 60,
-    catatan_jadwal TEXT,
-    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien),
-    FOREIGN KEY (id_terapis) REFERENCES terapis(id_terapis)
+    durasi_menit INT,
+    catatan TEXT,
+    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien) ON DELETE CASCADE,
+    FOREIGN KEY (id_terapis) REFERENCES terapis(id_terapis) ON DELETE CASCADE,
+    FOREIGN KEY (id_program) REFERENCES program_terapi(id_program) ON DELETE SET NULL
 );
 
--- Tabel Program Terapi (Rencana Jangka Panjang)
-CREATE TABLE program_terapi (
-    id_program INT AUTO_INCREMENT PRIMARY KEY,
-    id_pasien INT NOT NULL,
-    id_terapis INT NOT NULL,
-    nama_program VARCHAR(100) NOT NULL,
-    deskripsi TEXT,
-    tanggal_mulai DATE NOT NULL,
-    tanggal_selesai DATE,
-    status ENUM('Aktif', 'Selesai', 'Dihentikan') DEFAULT 'Aktif',
-    target_pemulihan TEXT,
-    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien),
-    FOREIGN KEY (id_terapis) REFERENCES terapis(id_terapis)
-);
-
--- Tabel Rekam Medis (Catatan Evaluasi Klinis per Sesi - Relasi 1:1)
+-- 9. Tabel REKAM MEDIS (Hasil Pemeriksaan Klinis)
 CREATE TABLE rekam_medis (
     id_rekam_medis INT AUTO_INCREMENT PRIMARY KEY,
-    id_jadwal INT UNIQUE NOT NULL, -- UNIQUE mengunci relasi 1:1 dengan jadwal
+    id_jadwal INT UNIQUE,
     tanggal_sesi DATETIME NOT NULL,
-    skala_nyeri_sebelum INT CHECK (skala_nyeri_sebelum BETWEEN 0 AND 10),
-    skala_nyeri_sesudah INT CHECK (skala_nyeri_sesudah BETWEEN 0 AND 10),
-    diagnosis TEXT NOT NULL,
-    tindakan_terapi TEXT NOT NULL,
+    skala_nyeri_sebelum INT,
+    skala_nyeri_sesudah INT,
+    diagnosis TEXT,
+    tindakan_terapi TEXT,
     hasil_evaluasi TEXT,
     catatan_klinis TEXT,
-    perlu_lanjutan BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (id_jadwal) REFERENCES jadwal_terapi(id_jadwal)
+    FOREIGN KEY (id_jadwal) REFERENCES jadwal_terapi(id_jadwal) ON DELETE CASCADE
 );
 
--- Tabel Resep Item Medis (Tabel Jembatan / Junction Table)
+-- 10. Tabel Junction: RESEP ITEM MEDIS (Relasi Banyak-ke-Banyak Medis)
 CREATE TABLE resep_item_medis (
     id_resep INT AUTO_INCREMENT PRIMARY KEY,
-    id_rekam_medis INT NOT NULL,
-    id_item_medis INT NOT NULL,
-    jumlah INT NOT NULL CHECK (jumlah > 0),
-    dosis VARCHAR(50),
+    id_rekam_medis INT,
+    id_item_medis INT,
+    jumlah INT NOT NULL DEFAULT 1,
+    dosis_penggunaan VARCHAR(50),
     instruksi_penggunaan TEXT,
-    tanggal_resep DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_rekam_medis) REFERENCES rekam_medis(id_rekam_medis),
-    FOREIGN KEY (id_item_medis) REFERENCES item_medis(id_item_medis)
+    tanggal_pemberian DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_rekam_medis) REFERENCES rekam_medis(id_rekam_medis) ON DELETE CASCADE,
+    FOREIGN KEY (id_item_medis) REFERENCES item_medis(id_item_medis) ON DELETE CASCADE
 );
 
--- ==========================================
--- 3. KLASTER FINANSIAL & TRANSAKSI
--- ==========================================
-
--- Tabel Tagihan (Billing Kasir - Relasi 1:1 dengan Jadwal)
+-- 11. Tabel TAGIHAN (Billing Transaksi Kasir)
 CREATE TABLE tagihan (
     id_tagihan INT AUTO_INCREMENT PRIMARY KEY,
-    id_jadwal INT UNIQUE NOT NULL, -- UNIQUE mengunci relasi 1:1 dengan jadwal
-    total_biaya DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-    biaya_sesi DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-    biaya_item_medis DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-    status_bayar ENUM('Belum Bayar', 'Lunas', 'Gagal Klaim') DEFAULT 'Belum Bayar',
-    metode_bayar ENUM('Tunai', 'Transfer', 'Asuransi') NOT NULL,
+    id_jadwal INT UNIQUE,
+    biaya_sesi DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    total_biaya DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    status_bayar ENUM('Belum Lunas', 'Lunas', 'Proses Klaim') DEFAULT 'Belum Lunas',
+    metode_bayar VARCHAR(50),
     tanggal_tagihan DATETIME DEFAULT CURRENT_TIMESTAMP,
-    tanggal_tunas DATETIME NULL,
-    FOREIGN KEY (id_jadwal) REFERENCES jadwal_terapi(id_jadwal)
+    tanggal_lunas DATETIME,
+    FOREIGN KEY (id_jadwal) REFERENCES jadwal_terapi(id_jadwal) ON DELETE CASCADE
 );
 
--- Tabel Klaim Asuransi (Penjaminan Finansial)
+-- 12. Tabel Junction: DETAIL TAGIHAN (Komoditas Keuangan Kasir)
+CREATE TABLE detail_tagihan (
+    id_detail INT AUTO_INCREMENT PRIMARY KEY,
+    id_tagihan INT,
+    id_item_medis INT,
+    kuantitas INT NOT NULL DEFAULT 1,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_tagihan) REFERENCES tagihan(id_tagihan) ON DELETE CASCADE,
+    FOREIGN KEY (id_item_medis) REFERENCES item_medis(id_item_medis) ON DELETE CASCADE
+);
+
+-- 13. Tabel KLAIM ASURANSI (Jembatan Klaim Finansial)
 CREATE TABLE klaim_asuransi (
-    id_claim INT AUTO_INCREMENT PRIMARY KEY,
-    id_tagihan INT NOT NULL,
-    id_asuransi INT NOT NULL,
-    jumlah_klaim DECIMAL(12,2) NOT NULL,
-    status_klaim ENUM('Diproses', 'Disetujui', 'Ditolak') DEFAULT 'Diproses',
-    no_referensi VARCHAR(50),
-    tanggal_klaim DATETIME DEFAULT CURRENT_TIMESTAMP,
-    tanggal_diproses DATETIME NULL,
-    FOREIGN KEY (id_tagihan) REFERENCES tagihan(id_tagihan),
-    FOREIGN KEY (id_asuransi) REFERENCES asuransi(id_asuransi)
+    id_klaim INT AUTO_INCREMENT PRIMARY KEY,
+    id_tagihan INT,
+    id_asuransi INT,
+    jumlah_klaim DECIMAL(10,2) NOT NULL,
+    status_klaim ENUM('Diajukan', 'Disetujui', 'Ditolak') DEFAULT 'Diajukan',
+    nomor_referensi VARCHAR(50) UNIQUE,
+    tanggal_pengajuan DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tanggal_diproses DATETIME,
+    FOREIGN KEY (id_tagihan) REFERENCES tagihan(id_tagihan) ON DELETE CASCADE,
+    FOREIGN KEY (id_asuransi) REFERENCES asuransi(id_asuransi) ON DELETE CASCADE
 );
-
--- ==========================================
--- 4. DATA AWAL (DUMMY DATA) UNTUK UJI COBA LOGIN
--- ==========================================
-INSERT INTO pengguna (username, password_hash, nama_lengkap, role) VALUES 
-('admin_eka', 'admin123', 'Eka Administrator', 'Admin'),
-('terapis_budi', 'terapis123', 'Dr. Budi Setiawan', 'Terapis'),
-('farmasi_siti', 'farmasi123', 'Siti Apoteker', 'Farmasi'),
-('kasir_andi', 'kasir123', 'Andi Kasir', 'Kasir');
-
--- Daftarkan dr. Budi ke tabel terapis secara otomatis agar relasi akun valid
-INSERT INTO terapis (id_terapis, nama_lengkap, no_str, spesialisasi, no_telepon) 
-VALUES (2, 'Dr. Budi Setiawan', 'STR-123456789-2026', 'Fisioterapi Pasca-Stroke', '08123456789');
