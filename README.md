@@ -38,4 +38,5 @@ Seluruh struktur basis data sebanyak 10 tabel terintegrasi telah berhasil dikonf
 ---
 
 ## 👥 Anggota Kelompok
-- **Eka** — *System Analyst, Database Administrator, & Core Developer*
+**Eka** — *System Analyst, Database Administrator, & Core Developer*
+**Risma Ayu** — *Frontend Designer & Technical Documentation Specialist*
