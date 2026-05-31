@@ -48,7 +48,7 @@ Seluruh struktur basis data sebanyak **13 tabel utama** telah berhasil dikonfigu
 
 ## 👥 Anggota Kelompok 
 
-* **Cut Ekarasiana (25102002):** System Analyst, Database Administrator, & Core Backend Developer (`database.sql`, `Koneksi.java`, Keamanan OOP).
-* **Rahma Santika (25102016):** Business Process Analyst & Core Developer untuk Modul *Patient & Scheduling* (Pendaftaran Pasien & Jadwal Terapi).
+* **Cut Ekarasiana Nome (25102002):** System Analyst, Database Administrator, & Core Backend Developer (`database.sql`, `Koneksi.java`, Keamanan OOP).
+* **Rahma Santika (25102018):** Business Process Analyst & Core Developer untuk Modul *Patient & Scheduling* (Pendaftaran Pasien & Jadwal Terapi).
 * **Pebi (25101001):** System Workflow Specialist & Core Developer untuk Modul *Clinical Record* (Rekam Medis & Evaluasi Perkembangan Pasien).
 * **Risma Ayu (25102009):** Frontend Designer & Core Developer untuk Modul *Billing & Financial* (Kalkulasi Tagihan, Detail Item, & Dokumen Laporan).
