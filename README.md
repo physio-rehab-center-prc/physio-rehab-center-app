@@ -21,7 +21,7 @@ Sistem Informasi *Physio Rehab Center* (PRC) mencakup **5 modul utama** yang dii
 
 ### 👥 Hak Akses Aktor Sistem (Privilege CRUD)
 * **Admin:** Memiliki akses penuh pada **Modul Manajemen Pasien** dan fungsi alokasi slot waktu kunjungan pada **Modul Sesi Terapi** (`jadwal_terapi`).
-* **Terapis:** Memiliki akses operasional pada **Modul Sesi Terapi** untuk menginput data klinis sensitif (skala nyeri, diagnosis, tindakan) ke `rekam_medis` serta merancang `program_terapi`.
+* **Terapis:** Memiliki akses operasional pada **Modul Sesi Terapi** untuk menginput data klinis sensitif (skala nyeri sebelum/sesudah sesi, diagnosis, tindakan) ke `rekam_medis` serta merancang `program_terapi`.
 * **Staf Farmasi:** Memiliki akses penuh pada **Modul Manajemen Resep & Item Medis** untuk memantau resep masuk (`resep_item_medis`) dan memperbarui stok fisik (`item_medis`).
 * **Kasir:** Memiliki hak akses eksklusif pada **Modul Billing & Asuransi** untuk memvalidasi ringkasan nota (`tagihan`), mengelola rincian biaya (`detail_tagihan`), dan mengeksekusi pengajuan (`klaim_asuransi`).
 
