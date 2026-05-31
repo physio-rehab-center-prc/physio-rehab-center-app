@@ -1,7 +1,6 @@
 # Physio Rehab Center (PRC) — Management Information System
 
-### Tugas Besar Pemrograman Berorientasi Objek & Manajemen Basis Data — Semester 2 Teknik Informatika
-
+### Tugas Besar Pemrograman Berorientasi Objek
 Aplikasi manajemen operasional klinik fisioterapi terintegrasi yang dibangun menggunakan **Java SE (Swing GUI)** dan **MySQL/MariaDB**. Sistem ini menerapkan arsitektur *Pay-per-Visit* untuk menjamin konsistensi keuangan, resep kefarmasian yang presisi, serta pelacakan perkembangan klinis pasien secara *real-time*.
 
 ---
@@ -19,17 +18,11 @@ Sistem Informasi *Physio Rehab Center* (PRC) mencakup **5 modul utama** yang dii
 
 ---
 
-### 👥 Hak Akses Aktor Sistem (Privilege CRUD)
+### 👥 Hak Akses Aktor Sistem 
 * **Admin:** Memiliki akses penuh pada **Modul Manajemen Pasien** dan fungsi alokasi slot waktu kunjungan pada **Modul Sesi Terapi** (`jadwal_terapi`).
 * **Terapis:** Memiliki akses operasional pada **Modul Sesi Terapi** untuk menginput data klinis sensitif (skala nyeri sebelum/sesudah sesi, diagnosis, tindakan) ke `rekam_medis` serta merancang `program_terapi`.
 * **Staf Farmasi:** Memiliki akses penuh pada **Modul Manajemen Resep & Item Medis** untuk memantau resep masuk (`resep_item_medis`) dan memperbarui stok fisik (`item_medis`).
 * **Kasir:** Memiliki hak akses eksklusif pada **Modul Billing & Asuransi** untuk memvalidasi ringkasan nota (`tagihan`), mengelola rincian biaya (`detail_tagihan`), dan mengeksekusi pengajuan (`klaim_asuransi`).
-
-## 🛠️ Konseptual OOP & Basis Data yang Diterapkan
-
-* **Encapsulation:** Pembatasan akses langsung variabel model melalui implementasi *private attributes* serta *getter & setter* yang ketat di tingkat objek Java.
-* **Inheritance & Polymorphism:** Kelas `Terapis` diturunkan secara langsung dari kelas induk `Pengguna` melalui generalisasi *Foreign Key* di database, didukung oleh fleksibilitas pemanggilan metode otentikasi.
-* **Database Normalization:** Desain database efisien yang memenuhi standar **Third Normal Form (3NF)** guna menekan redundansi data hingga minimal, menggunakan *junction table* untuk memecah relasi *Many-to-Many*.
 
 ---
 
@@ -53,9 +46,9 @@ Seluruh struktur basis data sebanyak **13 tabel utama** telah berhasil dikonfigu
 
 ---
 
-## 👥 Anggota Kelompok (Role-Based Core Responsibilities)
+## 👥 Anggota Kelompok 
 
-* **Cut Ekarasiana (Ketua):** System Analyst, Database Administrator, & Core Backend Developer (`database.sql`, `Koneksi.java`, Keamanan OOP).
-* **Rahma Santika (Anggota 1):** Business Process Analyst & Core Developer untuk Modul *Patient & Scheduling* (Pendaftaran Pasien & Jadwal Terapi).
-* **Pebi (Anggota 2):** System Workflow Specialist & Core Developer untuk Modul *Clinical Record* (Rekam Medis & Evaluasi Perkembangan Pasien).
-* **Risma Ayu (Anggota 3):** Frontend Designer & Core Developer untuk Modul *Billing & Financial* (Kalkulasi Tagihan, Detail Item, & Dokumen Laporan).
+* **Cut Ekarasiana (25102002):** System Analyst, Database Administrator, & Core Backend Developer (`database.sql`, `Koneksi.java`, Keamanan OOP).
+* **Rahma Santika (25102016):** Business Process Analyst & Core Developer untuk Modul *Patient & Scheduling* (Pendaftaran Pasien & Jadwal Terapi).
+* **Pebi (25101001):** System Workflow Specialist & Core Developer untuk Modul *Clinical Record* (Rekam Medis & Evaluasi Perkembangan Pasien).
+* **Risma Ayu (25102009):** Frontend Designer & Core Developer untuk Modul *Billing & Financial* (Kalkulasi Tagihan, Detail Item, & Dokumen Laporan).
