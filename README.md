@@ -33,7 +33,7 @@ Sistem Informasi *Physio Rehab Center* (PRC) mencakup **5 modul utama** yang dii
 
 ---
 
-## 🗄️ Arsitektur Data Berbasis SQL (12 Entitas Sinkron ERD)
+## 🗄️ Arsitektur Data Berbasis SQL (13 Entitas Sinkron ERD)
 
 Seluruh struktur basis data sebanyak **13 tabel utama** telah berhasil dikonfigurasi dan di-deploy pada DBMS MySQL dengan urutan dependensi *Foreign Key* sebagai berikut:
 
