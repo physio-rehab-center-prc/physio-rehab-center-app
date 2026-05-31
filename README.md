@@ -10,7 +10,7 @@ Sistem ini dirancang khusus untuk mengotomatisasi siklus pelayanan klinis secara
 
 ---
 
-## 👥 Anggota Kelompok 7
+## 👥 Anggota Kelompok 
 * Cut Ekarasiana Nome (25102002)
 * Rahma Santika (25102018)
 * Pebi (25101001)
