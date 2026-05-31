@@ -1,6 +1,5 @@
 -- ========================================================
 -- DATABASE SYSTEM: PHYSIO REHAB CENTER (PRC)
--- SINKRONISASI: ERD FINAL & LAPORAN KELOMPOK 7
 -- ========================================================
 
 -- 1. Tabel PENGGUNA (Otorisasi Akses & RBAC)
@@ -124,3 +123,46 @@ CREATE TABLE resep_item_medis (
     dosis_penggunaan VARCHAR(50),
     instruksi_penggunaan TEXT,
     tanggal_pemberian DATETIME DEFAULT CURRENT
+    FOREIGN KEY (id_rekam_medis) REFERENCES rekam_medis(id_rekam_medis) ON DELETE CASCADE,
+    FOREIGN KEY (id_item_medis) REFERENCES item_medis(id_item_medis) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 11. Tabel TAGIHAN (Billing Utama Kasir)
+CREATE TABLE tagihan (
+    id_tagihan INT AUTO_INCREMENT PRIMARY KEY,
+    id_jadwal INT UNIQUE,
+    id_pasien INT,
+    biaya_sesi DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    total_biaya DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    status_bayar ENUM('Belum Lunas', 'Lunas', 'Proses Klaim') DEFAULT 'Belum Lunas',
+    metode_bayar VARCHAR(50),
+    tanggal_tagihan DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tanggal_lunas DATETIME,
+    FOREIGN KEY (id_jadwal) REFERENCES jadwal_terapi(id_jadwal) ON DELETE CASCADE,
+    FOREIGN KEY (id_pasien) REFERENCES pasien(id_pasien) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 12. Tabel Junction: DETAIL TAGIHAN (Rincian Biaya Item Medis Finansial)
+CREATE TABLE detail_tagihan (
+    id_detail INT AUTO_INCREMENT PRIMARY KEY,
+    id_tagihan INT,
+    id_item_medis INT,
+    kuantitas INT NOT NULL DEFAULT 1,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_tagihan) REFERENCES tagihan(id_tagihan) ON DELETE CASCADE,
+    FOREIGN KEY (id_item_medis) REFERENCES item_medis(id_item_medis) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- 13. Tabel KLAIM ASURANSI (Transaksi Jembatan Klaim Finansial)
+CREATE TABLE klaim_asuransi (
+    id_klaim INT AUTO_INCREMENT PRIMARY KEY,
+    id_tagihan INT,
+    id_asuransi INT,
+    jumlah_klaim DECIMAL(10,2) NOT NULL,
+    status_klaim ENUM('Diajukan', 'Disetujui', 'Ditolak') DEFAULT 'Diajukan',
+    nomor_referensi VARCHAR(50) UNIQUE,
+    tanggal_pengajuan DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tanggal_diproses DATETIME,
+    FOREIGN KEY (id_tagihan) REFERENCES tagihan(id_tagihan) ON DELETE CASCADE,
+    FOREIGN KEY (id_asuransi) REFERENCES asuransi(id_asuransi) ON DELETE CASCADE
+) ENGINE=InnoDB;
