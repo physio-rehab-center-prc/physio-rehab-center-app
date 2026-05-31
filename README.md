@@ -6,15 +6,24 @@ Aplikasi manajemen operasional klinik fisioterapi terintegrasi yang dibangun men
 
 ---
 
-## 🚀 Fitur Utama Sistem (Ruang Lingkup RBAC)
+## 🚀 Fitur Utama Sistem (5 Modul Terintegrasi & 4 Aktor RBAC)
 
-Sistem ini membagi hak akses ke dalam 4 aktor utama dengan batasan fungsi (*privilege*) CRUD berbeda demi menjaga keamanan enkapsulasi data medis (*Role-Based Access Control*):
-* **Admin:** Mengelola data master pasien, administrasi penjaminan, dan mengatur slot waktu kunjungan (`jadwal_terapi`).
-* **Terapis:** Menginput data klinis sensitif (skala nyeri sebelum/sesudah sesi, diagnosis, tindakan) ke `rekam_medis`, merancang `program_terapi`, serta mengeluarkan resep elektronik.
-* **Staf Farmasi:** Memantau permintaan resep (`resep_item_medis`) dan mengelola pembaruan stok komoditas medis secara *real-time* (`item_medis`).
-* **Kasir:** Mengakses ringkasan *invoice* otomatis (`tagihan`), mengelola rincian transaksi (`detail_tagihan`), dan memproses klaim penjaminan (`klaim_asuransi`).
+Sistem Informasi *Physio Rehab Center* (PRC) mencakup **5 modul utama** yang diimplementasikan secara aman melalui pembatasan hak akses lintas **4 aktor utama** (*Role-Based Access Control*):
+
+### 📁 5 Modul Utama Aplikasi
+1. **Manajemen Pasien:** Mengelola registrasi, data demografis, riwayat medis, dan data asuransi pasien.
+2. **Manajemen Terapis:** Mengelola profil kompetensi terapis, spesialisasi, manajemen jadwal shift, dan akun otorisasi sistem.
+3. **Manajemen Sesi Terapi:** Mengatur penjadwalan dinamis kunjungan, pengisian rekam medis digital, serta pencatatan skala nyeri (sebelum & sesudah intervensi).
+4. **Manajemen Resep & Item Medis:** Mengelola inventaris stok alat/bahan medis klinik serta penerbitan resep per sesi terapi pasien.
+5. **Sistem Billing & Asuransi:** Melakukan kalkulasi penagihan otomatis, manajemen detail item finansial, laporan transaksi, dan pemrosesan klaim asuransi.
 
 ---
+
+### 👥 Hak Akses Aktor Sistem (Privilege CRUD)
+* **Admin:** Memiliki akses penuh pada **Modul Manajemen Pasien** dan fungsi alokasi slot waktu kunjungan pada **Modul Sesi Terapi** (`jadwal_terapi`).
+* **Terapis:** Memiliki akses operasional pada **Modul Sesi Terapi** untuk menginput data klinis sensitif (skala nyeri, diagnosis, tindakan) ke `rekam_medis` serta merancang `program_terapi`.
+* **Staf Farmasi:** Memiliki akses penuh pada **Modul Manajemen Resep & Item Medis** untuk memantau resep masuk (`resep_item_medis`) dan memperbarui stok fisik (`item_medis`).
+* **Kasir:** Memiliki hak akses eksklusif pada **Modul Billing & Asuransi** untuk memvalidasi ringkasan nota (`tagihan`), mengelola rincian biaya (`detail_tagihan`), dan mengeksekusi pengajuan (`klaim_asuransi`).
 
 ## 🛠️ Konseptual OOP & Basis Data yang Diterapkan
 
