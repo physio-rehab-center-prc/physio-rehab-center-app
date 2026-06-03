@@ -1,5 +1,4 @@
-**🏥Physio Rehab Center (PRC)**# 🏥 Physio Rehab Center (PRC)
-> **Tugas Besar Pemrograman Berorientasi Objek (PBO) **  
+**🏥Physio Rehab Center (PRC)**  
 
 Physio Rehab Center (PRC) adalah sistem informasi manajemen klinik fisioterapi terintegrasi yang dirancang untuk mengoptimalkan seluruh aspek operasional klinik secara digital. Sistem ini dibangun menggunakan Object Oriented Programming (OOP) atau dalam bahasa Indonesia program basis data dengan menerapkan prinsip inheritance, polymorphism, dan encapsulation.
 
