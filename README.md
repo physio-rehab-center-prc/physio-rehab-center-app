@@ -3,7 +3,7 @@ Physio Rehab Center (PRC) adalah sistem informasi manajemen klinik fisioterapi t
 ---
 
 ## 👥 Anggota Kelompok
-👤 CUT EKA
+👤 CUT EKARENSIANA NOME (25102002)
 
 👤 RAHMA SANTIKA
 
