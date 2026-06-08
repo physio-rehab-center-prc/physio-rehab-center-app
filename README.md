@@ -1,19 +1,9 @@
-# 🏥 PhysioRehabCenter (PRC)
-### Sistem Manajemen Klinik Fisioterapi Berbasis Java Swing
-
-> **Tugas Besar — Pemrograman Berorientasi Objek**  
-> Program Studi Teknik Informatika
-
----
+🏥
+Physio Rehab Center
+Sistem Manajemen Pusat Rehabilitasi Fisioterapi ·
 
 ## 👥 Anggota Kelompok
 
-| No | Nama  | Peran |
-|----|-------|-------|
-| 1  | **Rahma**  | Model Layer & Struktur Data |
-| 2  | **Pebi**   | Controller & Business Logic |
-| 3  | **Eka**    | UI — Login & Dashboard |
-| 4  | **Risma**  | UI — Pasien, Jadwal & Rekam Medis |
 
 ---
 
