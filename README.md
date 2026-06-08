@@ -3,4 +3,7 @@ Physio Rehab Center (PRC) adalah sistem informasi manajemen klinik fisioterapi t
 ---
 
 ## 👥 Anggota Kelompok
- 
+Cut Eka  (25102002)
+Rahma Santika  
+Pebi  
+Risma Ayu 
