@@ -6,8 +6,8 @@
 
 ## 👥 Anggota Tim
 
-| No | Nama | NIM | Role |
-|----|------|-----|------|
+| No | Nama | NIM |
+|----|------|-----|
 | 1  | Cut Eka | 25102002 | 
 | 2  | Risma Ayu |  | 
 | 3  | Pebi | 
