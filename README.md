@@ -9,7 +9,7 @@
 |----|------|-----|
 | 1  | Cut Eka | 25102002 | 
 | 2  | Risma Ayu |  | 
-| 3  | Pebi | | 
+| 3  | Pebi | 25101001 | 
 | 4  | Rahma | 25102018 |  
 
 ## 📌 Deskripsi Sistem
