@@ -1,6 +1,5 @@
 # 🏥 PhysioHub — Sistem Manajemen Fisioterapi
 
-> Tugas Besar Pemrograman Berorientasi Objek (PBO) — Semester 2
 
 ---
 
@@ -10,12 +9,12 @@
 |----|------|-----|
 | 1  | Cut Eka | 25102002 | 
 | 2  | Risma Ayu |  | 
-| 3  | Pebi | 
-| 4  | Rahma | 
+| 3  | Pebi | | 
+| 4  | Rahma | 25102018 |  
 
 ## 📌 Deskripsi Sistem
 
-**PhysioHub** adalah aplikasi desktop berbasis Java yang dirancang untuk membantu klinik fisioterapi dalam mengelola seluruh operasional pelayanan secara digital dan efisien.
+**PhysioHub** adalah aplikasi yang dirancang untuk membantu klinik fisioterapi dalam mengelola seluruh operasional pelayanan secara digital dan efisien.
 
 Sistem ini memiliki **3 role pengguna** dengan fitur yang berbeda-beda:
 
