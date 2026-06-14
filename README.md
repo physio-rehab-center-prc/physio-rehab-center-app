@@ -16,7 +16,7 @@
 
 **PhysioHub** adalah aplikasi yang dirancang untuk membantu klinik fisioterapi dalam mengelola seluruh operasional pelayanan secara digital dan efisien.
 
-Sistem ini memiliki **3 role pengguna** dengan fitur yang berbeda-beda:
+Sistem ini memiliki **3 role pengguna** :
 
 - 👨‍💼 **Admin** — mengelola seluruh sistem, jadwal, pasien, terapis, tagihan, dan laporan
 - 🩺 **Terapis** — melihat jadwal sesi, mengisi rekam medis SOAP, dan memantau progres pasien
