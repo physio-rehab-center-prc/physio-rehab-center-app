@@ -1,4 +1,4 @@
-# 🏥 PhysioHub — Sistem Manajemen Fisioterapi
+# 🏥 PhysioRehabCenter — Sistem Manajemen Fisioterapi
 
 
 ---
@@ -14,7 +14,7 @@
 
 ## 📌 Deskripsi Sistem
 
-**PhysioHub** adalah aplikasi yang dirancang untuk membantu klinik fisioterapi dalam mengelola seluruh operasional pelayanan secara digital dan efisien.
+**PhysioRehab** adalah aplikasi yang dirancang untuk membantu klinik fisioterapi dalam mengelola seluruh operasional pelayanan secara digital dan efisien.
 
 Sistem ini memiliki **3 role pengguna** :
 
